@@ -1,14 +1,19 @@
 "use client";
 
-import {gsap }from "gsap";
+import { gsap } from "gsap";
 import { useEffect, useRef } from "react";
 import Bounded from "./Bounded";
 
-import Shapes from './Shapes'
+import Shapes from "./Shapes";
+import Balls from "./Balls";
 const Hero = () => {
   const component = useRef(null);
 
   useEffect(() => {
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
+
+    // console.log(screenWidth)
     let ctx = gsap.context(() => {
       const tl = gsap.timeline();
       tl.fromTo(
@@ -28,12 +33,108 @@ const Hero = () => {
           },
         }
       );
+      //! Slide Up animation for "Frontend" title
+      tl.fromTo(
+        ".Job-title-Frontend",
+        { y: 40, opacity: 0, x: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          ease: "elastic.out(0.4,0.3)",
+          duration: 1,
+          // delay: 0.7,
+        }
+      );
+
+      //! Slide Down animation for "Frontend" title
+      tl.to(
+        ".Job-title-Frontend",
+        {
+          y: 40,
+          opacity: 0,
+          ease: "elastic.out(0.4,0.3)",
+          duration: 1,
+          // delay: 0.7,
+        },
+        "+=1"
+      );
+      //! Slide up animation for "Backend" title
+      tl.fromTo(
+        ".Job-title-Backend",
+        { y: 40, opacity: 0, x: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          ease: "elastic.out(0.4,0.3)",
+          duration: 1,
+          // delay: 0.7,
+        },
+        "-=1"
+      );
+
+      //! Slide down animation for "Backend" title
+
+      tl.to(
+        ".Job-title-Backend",
+        {
+          y: 40,
+          opacity: 0,
+          ease: "elastic.out(0.4,0.3)",
+          duration: 1,
+          // delay: 0.7,
+        }
+        // "-=1"
+      );
+
+      //! Slide up animation for "Fullstack" title
+      tl.fromTo(
+        ".Job-title-Fullstack",
+        { y: 20, opacity: 0, x: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          // delay:0.4,
+          ease: "elastic.out(0.4,0.3)",
+          duration: 1,
+        },
+        "-=1" //! Start 1 second before the previous animation ends
+      );
+
+      //! Slide left animation for "Fullstack title"
+
+      tl.to(
+        ".Job-title-Fullstack",
+        {
+          x: screenWidth <= 700 ? -100 : -120,
+          ease: "elastic.out(0.4,0.3)",
+          duration: 1,
+          // delay: 0.7,
+        }
+        // "-=1"
+      );
 
       tl.fromTo(
-        ".Job-title",
-        { y: 20, opacity: 0, scale: 1.2 },
-        { y: 0, opacity: 1, scale: 1, ease: "elastic.out(1,0.3)", duration: 1 }
+        ".Job-title-Developer",
+        { y: 20, opacity: 0, x: 0 },
+        {
+          y: 0,
+          x: screenWidth <= 700 ? 50 : 150,
+          opacity: 1,
+          // delay:0.4,
+          ease: "elastic.out(0.4,0.3)",
+          duration: 1,
+        },
+        "-=1"
+        // Start 1 second before the previous animation ends
       );
+
+      tl.to(".Job-title", {
+        y: "+=15", // Adjust the floating distance
+        ease: "power1.inOut",
+        duration: 2,
+        yoyo: true, // Make the animation play back and forth
+        repeat: -1, // Repeat the animation indefinitely
+      });
     }, component);
 
     return () => ctx.revert();
@@ -51,13 +152,28 @@ const Hero = () => {
       </span>
     ));
   };
+  const renderJob = (name: string[], key: string) => {
+    if (!name) return;
+
+    return name.map((Job, index) => (
+      <span
+        key={index}
+        className={`absolute Job-title-${Job}  opacity-0   bg-gradient-to-tr from-GoldenGate via-orange-500 to-GoldenGate bg-clip-text text-xl ${
+          window.innerWidth < 400 ? "text-xs" : "text-xl"
+        } font-bold uppercase tracking-[.2em] text-transparent opacity-1 md:text-4xl`}
+      >
+        {Job}
+      </span>
+    ));
+  };
+
   return (
     <Bounded ref={component}>
-      <div className="grid min-h-[70vh] grid-cols-1 md:grid-cols-2 items-center">
-        <Shapes/>
-        <div className="col-start-1 md:row-start-1">
+      <Balls />
+      <div className="flex min-h-[70vh] md:h-full h-screen space-x-0  md:w-auto w-full md:space-x-36  flex-1 md:flex-row flex-col items-center justify-center">
+        <div className="text-center z-40 static md:absolute">
           <h1
-            className="mb-8 text-[clamp(3rem,20vmin,20rem)] font-extrabold leading-none tracking-tighter"
+            className="mb-8 z-10 text-[clamp(3rem,20vmin,20rem)] font-extrabold leading-none tracking-tighter"
             aria-label="Arman Patel "
           >
             <span className="block text-AliceBlue">
@@ -67,9 +183,21 @@ const Hero = () => {
               {renderLetters("Patel", "last")}
             </span>
           </h1>
-          <span className="Job-title block bg-gradient-to-tr from-GoldenGate via-orange-500 to-GoldenGate bg-clip-text text-2xl font-bold uppercase tracking-[.2em] text-transparent opacity-0 md:text-4xl">
-            Fullstack Developer
+          <span
+            className={`flex glow Job-title drop-shadow-sm  z-40  w-full ml-15 md:ml-20 ${
+              window.innerWidth > 1400 ? "ml-32" : "ml-20"
+            } md:flex-row flex-col  text-center ${
+              window.innerWidth < 400 ? "ml-15" : "ml-20"
+            } `}
+          >
+            {renderJob(
+              ["Frontend", "Backend", "Fullstack", "Developer"],
+              "Job"
+            )}
           </span>
+        </div>
+        <div>
+          <Shapes />
         </div>
       </div>
     </Bounded>

@@ -6,16 +6,16 @@ import { Canvas, extend } from "@react-three/fiber";
 import { Suspense, useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { FontLoader } from "three/examples/jsm/Addons.js";
-// import urbanist from "../assests/Urbanist_Black.json";
+// import urbanist from "../assets/Urbanist_Black.json";
 
-export default function Shapes() {
+export default function Balls() {
   return (
     <div
       className="
-      mt-10  w-screen md:h-auto h-full md:w-[50%]  md:absolute static  aspect-square md:col-span-1 md:col-start-2 md:-mt-44"
+    mt-0   mr-0 md:mr-[30rem] hidden md:inline w-screen md:h-full h-full md:w-[100%]  md:absolute static  aspect-square md:mt-0"
     >
       <Canvas
-        className="z-30"
+        className="z-20"
         shadows
         gl={{ antialias: false }}
         dpr={[1, 1.5]}
@@ -28,7 +28,7 @@ export default function Shapes() {
             opacity={0.65}
             scale={40}
             blur={1}
-            far={9}
+            far={7}
           />
           <Environment preset="studio" />
         </Suspense>
@@ -38,62 +38,56 @@ export default function Shapes() {
 }
 
 function Geometries() {
+  const logo = [
+    "../assets/css-3.png",
+    "../assets/html-5.png",
+    "../assets/javascript.png",
+  ];
+
+  // const textures = logo.map((logo)=> new THREE.TextureLoader().load(logo))
   const geometries = [
     {
-      position: [0, 0, 0],
+      position: [-3, 0, 0],
       r: 0.3,
-      geometry: new THREE.IcosahedronGeometry(3), //! Gem
+      geometry: new THREE.SphereGeometry(1), 
     },
     {
-      position: [1, -0.75, 4],
+      position: [-3.5, -0.75, 4],
       r: 0.4,
-      geometry: new THREE.CapsuleGeometry(0.5, 1.6, 2, 16), //! Pill
+      geometry: new THREE.SphereGeometry(1),  
     },
     {
-      position: [-1.4, 2, -4],
+      position: [-3, 3, -4],
       r: 0.6,
-      geometry: new THREE.DodecahedronGeometry(1.5), //! Football
+      geometry: new THREE.SphereGeometry(1),  
     },
     {
-      position: [-0.8, -0.75, 5],
+      position: [-1, -0, 5],
       r: 0.5,
-      geometry: new THREE.TorusGeometry(0.6, 0.25, 16, 32), //! Donut
+      geometry: new THREE.SphereGeometry(1),  
     },
 
     {
-      position: [1.6, 1.6, -4],
+      position: [-4.6, 1.6, -4],
       r: 0.7,
-      geometry: new THREE.OctahedronGeometry(1.5), //! Diamond
+      geometry: new THREE.SphereGeometry(1),  
     },
   ];
 
   const materials = [
-    new THREE.MeshNormalMaterial(),
-    new THREE.MeshStandardMaterial({ color: 0xee5a24, roughness: 0 }),
-    new THREE.MeshStandardMaterial({ color: 0xd980fa, roughness: 0.4 }),
-    new THREE.MeshStandardMaterial({ color: 0xb53471, roughness: 0.7 }),
-    new THREE.MeshStandardMaterial({ color: 0xffc312, roughness: 0.2 }),
-    new THREE.MeshStandardMaterial({ color: 0xea2027, roughness: 0.8 }),
-    new THREE.MeshStandardMaterial({ color: 0x6f1e51, roughness: 0.6 }),
-    new THREE.MeshStandardMaterial({ color: 0x5758bb, roughness: 0.5 }),
-    new THREE.MeshStandardMaterial({
-      roughness: 0.5,
-      metalness: 0.5,
-      color: 0x2980b9,
-    }),
-    new THREE.MeshStandardMaterial({
-      color: 0x2c3e50,
-      roughness: 0.4,
-      metalness: 0.3,
-    }),
+    // new THREE.MeshNormalMaterial(),
+    new THREE.MeshStandardMaterial({ color: 0xff6f00, roughness: 1 }),
+    new THREE.MeshStandardMaterial({ color: 0xffdf00, roughness: 1 }),
+    new THREE.MeshStandardMaterial({ color: 0x006eff, roughness: 1 }),
+    new THREE.MeshStandardMaterial({ color: 0x0091ff, roughness: 1 }),
+    new THREE.MeshStandardMaterial({ color: 0x003fdd, roughness: 1 }),
   ];
 
   const soundEffect = [
-    new Audio("/sounds/knock1.ogg"),
     new Audio("/sounds/knock2.ogg"),
     new Audio("/sounds/knock3.ogg"),
   ];
-  return geometries.map(({ position, r, geometry }) => (
+  return geometries.map(({ position, r, geometry }, index) => (
     <group key={JSON.stringify(position)}>
       <Geometry
         position={position.map((p) => p * 2)}
@@ -120,7 +114,7 @@ function Geometry({ position, r, geometry, materials, soundEffect }) {
     const mesh = e.object;
 
     gsap.utils.random(soundEffect).play();
-    gsap.to(mesh.rotation, {
+    gsap.to(mesh.position, {
       x: `+=${gsap.utils.random(0, 2)}`,
       y: `+=${gsap.utils.random(0, 2)}`,
       z: `+=${gsap.utils.random(0, 2)}`,
@@ -156,7 +150,7 @@ function Geometry({ position, r, geometry, materials, soundEffect }) {
   }, []);
   return (
     <group position={position} ref={meshRef}>
-      <Float speed={5 * r} rotationIntensity={6 * r} floatIntensity={5 * r}>
+      <Float speed={5 * r} floatIntensity={5 * r}>
         <mesh
           geometry={geometry}
           onClick={handleClick}
