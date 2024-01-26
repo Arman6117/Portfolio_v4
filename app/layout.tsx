@@ -23,7 +23,7 @@ export default function RootLayout({
       <body
         className={clsx(
           urbanist.className,
-          " overflow-x-hidden relative min-h-screen"
+          " overflow-x-hidden relative min-h-screen scrollbar-hide"
         )}
       >
         <Header />
