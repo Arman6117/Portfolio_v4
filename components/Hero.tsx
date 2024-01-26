@@ -9,9 +9,9 @@ import Balls from "./Balls";
 const Hero = () => {
   const component = useRef(null);
 
+  const screenWidth = window.innerWidth;
+  const screenHeight = window.innerHeight;
   useEffect(() => {
-    const screenWidth = window.innerWidth;
-    const screenHeight = window.innerHeight;
 
     // console.log(screenWidth)
     let ctx = gsap.context(() => {
@@ -138,7 +138,7 @@ const Hero = () => {
     }, component);
 
     return () => ctx.revert();
-  }, []);
+  }, [screenWidth]);
 
   const renderLetters = (name: string, key: string) => {
     if (!name) return;
@@ -159,7 +159,7 @@ const Hero = () => {
       <span
         key={index}
         className={`absolute Job-title-${Job}  opacity-0   bg-gradient-to-tr from-GoldenGate via-orange-500 to-GoldenGate bg-clip-text text-xl ${
-          window.innerWidth < 400 ? "text-xs" : "text-xl"
+        screenWidth < 400 ? "text-xs" : "text-xl"
         } font-bold uppercase tracking-[.2em] text-transparent opacity-1 md:text-4xl`}
       >
         {Job}
@@ -185,9 +185,9 @@ const Hero = () => {
           </h1>
           <span
             className={`flex glow Job-title drop-shadow-sm  z-40  w-full ml-15 md:ml-20 ${
-              window.innerWidth > 1400 ? "ml-32" : "ml-20"
+            screenWidth > 1400 ? "ml-32" : "ml-20"
             } md:flex-row flex-col  text-center ${
-              window.innerWidth < 400 ? "ml-15" : "ml-20"
+            screenWidth < 400 ? "ml-15" : "ml-20"
             } `}
           >
             {renderJob(
