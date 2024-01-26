@@ -19,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="bg-[#100f27]  text-AliceBlue">
+    <html lang="en" className="bg-[#100f27]  text-AliceBlue scrollbar-hide">
       <body
         className={clsx(
           urbanist.className,
