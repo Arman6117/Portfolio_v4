@@ -8,9 +8,9 @@ import Shapes from "./Shapes";
 import Balls from "./Balls";
 const Hero = () => {
   const component = useRef(null);
-
-  const screenWidth = window.innerWidth;
-  const screenHeight = window.innerHeight;
+  const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 0;
+  const screenHeight = typeof window !== 'undefined' ? window.innerHeight : 0;
+  
   useEffect(() => {
 
     // console.log(screenWidth)
