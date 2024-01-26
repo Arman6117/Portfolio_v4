@@ -71,25 +71,25 @@ const ProjectCard = ({ children, opp }: ProjectCard) => {
   }, []);
   return (
     <div
-      className="w-full md:h-full h- p-4 flex md:flex-row flex-col"
+      className="min-w-full w-screen h-full md:h-full h- p-4 flex md:flex-row flex-col"
       ref={component}
     >
-      <div className=" flex items-center md:flex-row flex-col  relative w-full ">
+      <div className=" flex items-center h-full md:flex-row flex-col  relative w-full ">
         <div
-          className={`w-full projectCard md:h-full p-4 flex flex-col  static z-10  rounded-md`}
+          className={`w-full max-w-full projectCard text-center md:text-start justify-center items-center md:justify-normal md:items-start h-full p-4 flex md:space-x-10 flex-col  static z-10  rounded-md`}
           style={{ backgroundColor: project.color }}
         >
-          <div className="relative w-full h-full z-30 -left-64 ">
+          <div className="md:relative max-w-[100dvw]  w-full h-full md:h-full z-30 -left- lg:-left-[20rem] ">
             <Laptop url={project.url} />
           </div>
-          <div className="flex  flex-col absolute space-y-7 ">
+          <div className="flex  flex-col md:absolute space-y-7 ">
             <Heading
               as="h2"
-              className="relative z-30 drop-shadow-md md:left-[30rem] text-2xl -top-2 md:text-4xl  "
+              className="relative z-30 drop-shadow-md md:left-[30rem] max-w-full text-2xl top- md:-top-2 md:text-4xl  "
             >
               {children}
             </Heading>
-            <div className="flex flex-col ">
+            <div className=" hidden  md:flex flex-col ">
               <h3
                 // as="h4"
                 className="relative z-30 drop-shadow-md md:left-[30rem] font-bold text-2xl -top-2   "
@@ -100,7 +100,7 @@ const ProjectCard = ({ children, opp }: ProjectCard) => {
                 {project.description}
               </p>
             </div>
-            <div className="flex flex-col ">
+            <div className=" hidden md:flex flex-col ">
               <h3
                 // as="h4"
                 className="relative z-30 drop-shadow-md md:left-[30rem] font-bold text-2xl -top-2   "
@@ -118,7 +118,6 @@ const ProjectCard = ({ children, opp }: ProjectCard) => {
           </div>
         </div>
       </div>
-     
     </div>
   );
 };
