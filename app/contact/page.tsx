@@ -1,9 +1,14 @@
-import React from 'react'
+import Shapes from "./_components/Shapes";
+import React from "react";
 
 const page = () => {
   return (
-    <div>page</div>
-  )
-}
+    <div className="w-screen h-screen flex justify-center items-center">
+      <div>
+        <Shapes />
+      </div>
+    </div>
+  );
+};
 
-export default page
+export default page;

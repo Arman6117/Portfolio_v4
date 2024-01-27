@@ -113,7 +113,7 @@ const ProjectCard = ({ children, opp }: ProjectCard) => {
             </div>
           </div>
           <div className="flex space-x-10">
-            <Button linkField={project.url} label="Code" />
+            <Button linkField={project.githubUrl} label="Code" />
             <Button linkField={project.url} label="Visit" />
           </div>
         </div>
