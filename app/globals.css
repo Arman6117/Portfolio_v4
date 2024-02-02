@@ -36,6 +36,17 @@
   transform-origin: top left;
 }
 
+.glass {
+  background-color: rgba(255, 255, 255, 0.431);
+  /* opacity: 100; */
+  filter: blur(1px);
+}
 html {
   overflow-x: hidden !important;
+}
+
+@layer components {
+  .input-style {
+    @apply rounded-md text-black font-medium p-2 text-lg bg-white
+  }
 }

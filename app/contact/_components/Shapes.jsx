@@ -12,7 +12,7 @@ export default function Shapes() {
   return (
     <div
       className="
-      mt-10  w-screen md:h-auto h-full md:w-[50%]  md:absolute static  aspect-square md:col-span-1 md:col-start-2 md:-mt-44"
+      w-screen h-screen"
     >
       <Canvas
         className="z-30"
@@ -38,32 +38,57 @@ export default function Shapes() {
 }
 
 function Geometries() {
+  const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 0;
+  const screenHeight = typeof window !== 'undefined' ? window.innerHeight : 0;
+  const getRandomPosition = () => [
+    (Math.random() * 8) - 2,  // Random X-axis position between -2 and 2
+    (Math.random() * 6) - 2,  // Random Y-axis position between -2 and 2
+    (Math.random() * 1) - 2,  // Random Z-axis position between -2 and 2
+  ];
+  
+
+  console.log(getRandomPosition());
   const geometries = [
     {
-      position: [0, 0, 0],
+      position: [3,-1,1],
       r: 0.3,
-      geometry: new THREE.IcosahedronGeometry(3), //! Gem
+      geometry: new THREE.SphereGeometry(1.5), //! Gem
     },
     {
-      position: [1, -0.75, 4],
+      position: [6,2,-2],
       r: 0.4,
-      geometry: new THREE.CapsuleGeometry(0.5, 1.6, 2, 16), //! Pill
+      geometry: new THREE.SphereGeometry(1.5), //! Pill
     },
     {
-      position: [-1.4, 2, -4],
+      position: [2,1,-2],
       r: 0.6,
-      geometry: new THREE.DodecahedronGeometry(1.5), //! Football
+      geometry: new THREE.SphereGeometry(1.5), //! Football
     },
     {
-      position: [-0.8, -0.75, 5],
+      position: [-5,3,-7],
       r: 0.5,
-      geometry: new THREE.TorusGeometry(0.6, 0.25, 16, 32), //! Donut
+      geometry: new THREE.SphereGeometry(1.5), //! Donut
     },
 
     {
-      position: [1.6, 1.6, -4],
+      position: [-2,-1,-2],
       r: 0.7,
-      geometry: new THREE.OctahedronGeometry(1.5), //! Diamond
+      geometry: new THREE.SphereGeometry(1.5), //! Diamond
+    },
+    {
+      position: [5,0,-8],
+      r: 0.7,
+      geometry: new THREE.SphereGeometry( 1.5), //! Diamond
+    },
+    {
+      position: [-5,2,-2],
+      r: 0.7,
+      geometry: new THREE.SphereGeometry(1.5)  //! Diamond
+    },
+    {
+      position: [-1,1,1],
+      r: 0.7,
+      geometry: new THREE.SphereGeometry( 1.5)  //! Diamond
     },
   ];
 
@@ -76,6 +101,9 @@ function Geometries() {
     new THREE.MeshStandardMaterial({ color: 0xea2027, roughness: 0.8 }),
     new THREE.MeshStandardMaterial({ color: 0x6f1e51, roughness: 0.6 }),
     new THREE.MeshStandardMaterial({ color: 0x5758bb, roughness: 0.5 }),
+    new THREE.MeshStandardMaterial({ color: 0x5758bb, roughness: 0.7 }),
+    new THREE.MeshStandardMaterial({ color: 0x9258bb, roughness: 0.5 }),
+    new THREE.MeshStandardMaterial({ color: 0x5ad8bb, roughness: 0.5 }),
     new THREE.MeshStandardMaterial({
       roughness: 0.5,
       metalness: 0.5,
@@ -156,7 +184,7 @@ function Geometry({ position, r, geometry, materials, soundEffect }) {
   }, []);
   return (
     <group position={position} ref={meshRef}>
-      <Float speed={5 * r} rotationIntensity={6 * r} floatIntensity={5 * r}>
+      <Float speed={5 * r} rotationIntensity={6 * r} floatIntensity={9 * r}>
         <mesh
           geometry={geometry}
           onClick={handleClick}
