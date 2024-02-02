@@ -50,7 +50,7 @@ const ContactForm = () => {
     <div className="h-full w-full flex justify-center items-center">
       <div className="w-full max-w-md p-8 bg-gradient-to-b from-white/10 to-white/5 rounded-md backdrop-filter backdrop-blur-lg border border-white bg-opacity-100">
         <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
-          <div className="flex flex-col">
+          <div className="flex flex-col ">
             <label htmlFor="name" className="text-white font-semibold text-2xl">
               Name
             </label>

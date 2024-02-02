@@ -14,19 +14,13 @@ const page = () => {
             About Arman
           </Heading>
           <div className="prose prose-xl prose-slate prose-invert col-start-1">
-            Hey, I’m Andy! I grew up in the Pacific Northwest and love all
-            things creative. From the misty forests to the vibrant city streets,
-            my surroundings have always fueled my passion for design and coding.
+          Hey, I&apos;m Arman! I hail from India, where the vibrant culture and rich diversity have always inspired my creativity. Growing up, I&apos;ve been captivated by the fusion of art and technology, and it&apos;s what led me into the world of development.
             <br />
             <br />
-            As a self-taught developer, I found my calling in blending artistic
-            flair with technical skill. My journey has led me to specialize in
-            front-end development, where I craft interactive experiences that
-            are not just functional, but also visually stunning.
+            As a self-taught developer, I&apos;ve embarked on a journey to blend my passion for design with technical expertise. Specializing in front-end development, I craft immersive digital experiences that seamlessly merge functionality with aesthetics.
             <br />
             <br />
-            When I&apos;m not coding,you&apos;ll find me experimenting with
-            digital art or exploring the latest in web animation.
+            Beyond coding, I immerse myself in the realm of digital art, constantly exploring new techniques and styles. You&apos;ll often find me delving into the latest trends in web animation, pushing the boundaries of what&apos;s achievable in the digital realm.
             <br />
             <br />
             Join me as I continue to push the boundaries of what&apos;s possible
