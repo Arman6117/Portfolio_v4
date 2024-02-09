@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   title: "Arman Patel Portfolio Website",
   description:
     "This is my portfolio website to showcase my skills and projects",
+  icons:['/favicon/apple-touch-icon.png',"/favicon/favicon-32x32.png","/favicon/favicon-16x16.png"]
 };
 
 export default function RootLayout({
@@ -20,6 +21,26 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="bg-[#100f27]  text-AliceBlue scrollbar-hide">
+<head>
+<link
+        rel="apple-touch-icon"
+        sizes="180x180"
+        href="/favicon/apple-touch-icon.png"
+      />
+      <link
+        rel="icon"
+        type="image/png"
+        sizes="32x32"
+        href="/favicon/favicon-32x32.png"
+      />
+      <link
+        rel="icon"
+        type="image/png"
+        sizes="16x16"
+        href="/favicon-16x16.png"
+      />
+      <link rel="manifest" href="/site.webmanifest" />
+</head>
       <body
         className={clsx(
           urbanist.className,
