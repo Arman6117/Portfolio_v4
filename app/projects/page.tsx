@@ -11,7 +11,7 @@ const page = () => {
         <p className="font-semibold text-xl mt-10 ">
           A selection of some of my website projects
         </p>
-        <div className="h-full w-full">
+        <div className="h-screen w-full">
           <ProjectSection />
         </div>
       </Bounded>
