@@ -3,42 +3,36 @@ import React, { useEffect, useState } from "react";
 import Button from "@/components/Button";
 import Laptop from "./Laptop";
 import gsap from "gsap";
-import { BiArrowFromRight } from "react-icons/bi";
-import { BsArrowLeft, BsArrowRight, BsArrowRightCircle } from "react-icons/bs";
+
+import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 
 const projects = [
   {
-    title: "Pitchify",
+    title: "Google Docs Clone",
     description:
-      "Pitchify is a dynamic platform empowering startups to pitch their innovative ideas and connect with a vibrant community, fostering recognition and collaboration.",
-    bgColor: "bg-pink-500",
-    url:"https://pitchify-gray.vercel.app/",
-    github:"https://github.com/Arman6117/pitchify"
+      " Developed a Google Docs Clone using Next.js and TypeScript, featuring real-time collaborative editing, a Word-like ruler, rich text formatting, and secure authentication with end-to-end encryption",
+    bgColor: "bg-blue-500",
+    url: "https://docs-ten-ruddy.vercel.app/",
+    github: "https://github.com/Arman6117/docs",
+    thumbnail: "/image/docs.png",
   },
   {
-    title: "Spotify Clone",
+    title: "Truth-Tag",
     description:
-      "A dynamic web replica of the renowned music streaming platform, Spotify.This project encapsulates key features such as song playback, playlists,and user authentication,mirroring the original Spotify’s user experience.",
-    bgColor: "bg-emerald-400",
-    url: "https://spotify-clone-xi-orcin.vercel.app/",
-    github:"https://github.com/Arman6117/Spotify"
-
+      "Developed TruthTag, an AI-powered label analysis web app using Gemini API to provide health scores, recommended consumption, potential harms, and appropriate age guidance for products.",
+    bgColor: "bg-purple-400",
+    url: "https://truth-tag-smoky.vercel.app/",
+    github: "https://github.com/Arman6117/TruthTag",
+    thumbnail: "/image/truthtag.png",
   },
   {
     title: "Codraw",
     description:
       "Codraw is a real-time collaborative whiteboard platform designed to empower teams and individuals to brainstorm, ideate, and create together seamlessly. With features like live editing, commenting, and interactive reactions, it transforms teamwork into a visual and engaging experience.",
     bgColor: "bg-slate-200",
-    url:"https://codraw-theta.vercel.app/",
-    github:"https://github.com/Arman6117/Codraw"
-  },
-  {
-    title: "Finsmart",
-    description:
-      "FinSmart is a personal finance management platform that helps you track expenses, set budgets, and achieve financial goals effortlessly. With insightful analytics and smart tools, it makes managing your money simple and effective.",
-    bgColor: "bg-blue-400",
-    url:"https://finansmart-woad.vercel.app/",
-    github:"https://github.com/Arman6117/FinanSmart"
+    url: "https://codraw-theta.vercel.app/",
+    github: "https://github.com/Arman6117/Codraw",
+    thumbnail: "/image/codraw.png",
   },
 ];
 
@@ -251,12 +245,16 @@ const ProjectSection = () => {
         </div>
         <div className="flex gap-4 mt- animate-button-out animate-button-in  items-center justify-center">
           <Button label="Visit" linkField={projects[currentIndex].url} />
-          <Button label="Code" linkField= {projects[currentIndex].github} />
+          <Button label="Code" linkField={projects[currentIndex].github} />
         </div>
       </div>
       <hr className="bg-slate-600 w-0.5 h-full hidden md:inline-block md:rotate-0 rotate-90" />
       <div className="h-full md:w-[55%]  w-screen  animate-laptop-out animate-laptop-in">
-        <Laptop url={projects[currentIndex].url} />
+        <Laptop
+          url={projects[currentIndex].url}
+          thumbnail={projects[currentIndex].thumbnail}
+          title={projects[currentIndex].title}
+        />
       </div>
       <div className="flex absolute mb-3 md:inset-x-1/2 gap-0.5  bottom-0  items-center justify-center">
         <div className="z-20">

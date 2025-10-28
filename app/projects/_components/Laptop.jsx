@@ -8,16 +8,29 @@ import {
   useGLTF,
   Html,
 } from "@react-three/drei";
-import Image from "next/image";
+
 import { Canvas, useFrame } from "@react-three/fiber";
 
-import { Suspense, useRef } from "react";
-import { Bloom, EffectComposer } from "@react-three/postprocessing";
+import { Suspense, useRef, useState, useEffect } from "react";
 
 function Model(props) {
   const iframeRef = useRef();
   const group = useRef();
   const { nodes, materials } = useGLTF("/mac-draco.glb");
+  const [iframeLoaded, setIframeLoaded] = useState(false);
+
+  // Reset loading state when URL changes
+  useEffect(() => {
+    setIframeLoaded(false);
+
+    // Fallback timeout in case onLoad doesn't fire
+    const timeout = setTimeout(() => {
+      setIframeLoaded(true);
+      props.onLoad?.();
+    }, 3000); // 3 seconds fallback
+
+    return () => clearTimeout(timeout);
+  }, [props.url, props]);
 
   useFrame((state) => {
     const t = state.clock.getElapsedTime();
@@ -43,13 +56,18 @@ function Model(props) {
     );
   });
 
+  const handleIframeLoad = () => {
+    setIframeLoaded(true);
+    props.onLoad?.();
+  };
+
   return (
     <group
       ref={group}
       {...props}
-      position={[-2.5, 1.2, -4]} // Keep the position as it is
+      position={[-2.5, 1.2, -4]}
       scale={[1.5, 1.5, 1.5]}
-      rotation={[0, Math.PI, 0]} // Rotate Y-axis by 180 degrees to face forward
+      rotation={[0, Math.PI, 0]}
       dispose={null}
     >
       <group rotation-x={-0.15} position={[0, -0.04, 0.41]}>
@@ -63,13 +81,11 @@ function Model(props) {
             geometry={nodes["Cube008_1"].geometry}
           />
           <mesh geometry={nodes["Cube008_2"].geometry}>
-            {/* Update the Html component here */}
             <Html
               className="content"
-              position={[-0.01, 0.1, -0.2]} // Adjusted for better alignment
+              position={[-0.01, 0.1, -0.2]}
               rotation-x={-Math.PI / 2}
-              rotation-z={0.01} // Minor rotation tweak
-              // scale={[0.85, 0.85, 0.85]} // Adjust scale
+              rotation-z={0.01}
               transform
               center
               scaleFactor={0.5}
@@ -82,23 +98,37 @@ function Model(props) {
                   position: "absolute",
                   width: "100%",
                   height: "100%",
-                  //  paddingTop: "56.25%",  Aspect ratio
+                  cursor: "pointer",
                 }}
+                onClick={() => window.open(props.url, "_blank")}
               >
-                <iframe
-                  ref={iframeRef}
-                  title="Live Website"
-                  src={props.url}
-                  allowFullScreen
+                <img
+                  src={props.thumbnail}
+                  alt={props.title}
                   style={{
-                    position: "absolute",
                     width: "100%",
                     height: "100%",
-                    top: 0,
-                    left: 0,
+                    objectFit: "cover",
                     border: "none",
                   }}
                 />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    background: "rgba(0, 0, 0, 0.7)",
+                    padding: "10px 20px",
+                    borderRadius: "8px",
+                    color: "white",
+                    fontSize: "14px",
+                    fontWeight: "bold",
+                    pointerEvents: "none",
+                  }}
+                >
+                  Click to Visit →
+                </div>
               </div>
             </Html>
           </mesh>
@@ -128,26 +158,70 @@ function Model(props) {
   );
 }
 
-const Laptop = ({ url }) => {
-  return (
-    <Canvas camera={{ position: [-5, -10, 10], fov: 70 }}>
-      <pointLight position={[10, 10, 10]} intensity={1.5} />
-      <Suspense fallback={null}>
-        <group rotation={[0, Math.PI, 0]} position={[-3, 1, 2]} scale={1.2}>
-          <Model url={url} />
-        </group>
+const Laptop = ({ url, thumbnail, title }) => {
+  const [isLoading, setIsLoading] = useState(true);
 
-        <Environment preset="studio" />
-      </Suspense>
-      <ContactShadows position={[0, -4.5, 0]} scale={20} blur={2} far={4.8} />
-      <OrbitControls
-        target={[0, 1, 0]}
-        enablePan={false}
-        enableZoom={false}
-        minPolarAngle={Math.PI / 2.2}
-        maxPolarAngle={Math.PI / 2.2}
-      />
-    </Canvas>
+  // Reset loading state when URL changes
+  useEffect(() => {
+    setIsLoading(true);
+  }, [url]);
+
+  // Fallback timeout to hide overlay
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setIsLoading(false);
+    }, 4000); // 4 seconds max wait
+
+    return () => clearTimeout(timeout);
+  }, [url]);
+
+  return (
+    <div className="relative w-full h-full">
+      {/* Global Loading Overlay */}
+      {isLoading && (
+        <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/30 backdrop-blur-sm rounded-lg">
+          <div className="flex flex-col items-center gap-4">
+            <div className="w-16 h-16 border-4 border-white/30 border-t-white rounded-full animate-spin" />
+            <p className="text-white text-lg font-medium">Loading Project...</p>
+          </div>
+        </div>
+      )}
+
+      <Canvas camera={{ position: [-5, -10, 10], fov: 70 }}>
+        <pointLight position={[10, 10, 10]} intensity={1.5} />
+        <Suspense fallback={null}>
+          <group rotation={[0, Math.PI, 0]} position={[-3, 1, 2]} scale={1.2}>
+            <Model 
+              url={url} 
+              thumbnail={thumbnail}
+              title={title}
+              onLoad={() => setIsLoading(false)} 
+            />
+          </group>
+
+          <Environment preset="studio" />
+        </Suspense>
+        <ContactShadows position={[0, -4.5, 0]} scale={20} blur={2} far={4.8} />
+        <OrbitControls
+          target={[0, 1, 0]}
+          enablePan={false}
+          enableZoom={false}
+          minPolarAngle={Math.PI / 2.2}
+          maxPolarAngle={Math.PI / 2.2}
+        />
+      </Canvas>
+
+      <style jsx>{`
+        @keyframes spin {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+      `}</style>
+    </div>
   );
 };
 
